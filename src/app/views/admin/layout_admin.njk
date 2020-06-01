@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/stylefoodfy.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet">
+    {% block head %}
+        <title>Administrador - Foodfy</title>
+    {% endblock %}
+     </head>
+
+    <body>
+    {% block header %}
+    <header class = "admin">
+        <nav class="links">
+            <a href="/" >
+                <div class="logo">
+                    <img src="/logo_branco.png" 
+                    alt="logofoodfy" > 
+                </div>
+            </a>
+            <a href = "/admin/recipes">RECEITAS</a>
+            <a href = "/admin/chefs">CHEFS</a>
+        </nav>    
+    </header>
+    {% endblock header %}
+        
+        {% block content %}{% endblock %}
+
+        <script src="/scripts_admin.js"></script>
+    </body>
+
+</html>

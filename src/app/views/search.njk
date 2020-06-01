@@ -1,0 +1,30 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Busca - Foodfy</title>
+    <link rel="stylesheet" href="/stylefoodfy.css">
+{% endblock head %}
+
+
+{% block content %}
+        <main class = "search">
+        <h1> Buscando por "{{filter}}"</h1>
+            <section class="receitas">
+            {% for item in items %}
+                <div class="receita" id="{{item.id}}">
+                    <div class="fotoReceita">
+                        <img src="{{item.image}}" alt="imagem ilustrativa da receita: {{item.title}}">
+                    </div>
+                    <div class="nomeReceita">
+                        <h3>{{item.title}}</h3>
+                    </div>
+                    <div class="criadorReceita">
+                        <p>por {{item.chef_name}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            </section>
+
+            
+        </main>
+{% endblock content %}

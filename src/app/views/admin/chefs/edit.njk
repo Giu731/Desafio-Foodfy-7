@@ -1,0 +1,46 @@
+{% extends "admin/layout_admin.njk" %}
+
+{% block head %}
+    <title>Editar chef - Foodfy</title>
+    <link rel="stylesheet" href="/stylefoodfy.css">
+{% endblock head %}
+
+
+{% block content %}
+<main>
+        <section class="Page">
+            <div class = "Head">
+                <span>Editando chef</span>
+                <span>
+                    <form id = "form-delete" method = "POST" action = "/admin/chefs?_method=DELETE">
+                        <input
+                            type = "hidden",
+                            name = "id",
+                            value = {{chef.id}}>
+                        <button id = "delete" type = "submit">Deletar</button>
+                    </form>
+                </span>
+               <span> 
+                    <button form = "update" type = "submit">Salvar chef</button>
+                </span>
+            </div>
+            <form id="update" method = "POST" action = "/admin/chefs?_method=PUT">
+                
+                {% include 'admin/chefs/fields.njk' %}
+                <input
+                    type = "hidden"
+                    name = "id"
+                    value = {{chef.id}}>
+            </form>
+        </section>
+    <script>
+        const formDelete = document.querySelector("#form-delete")
+        formDelete.addEventListener("submit", function(event){
+            const confirmation = confirm("Deseja deletar o chef?")
+            if(!confirmation){
+                event.preventDefault()
+            }
+        })
+    </script>
+</main>
+{% endblock content %}

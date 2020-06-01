@@ -1,0 +1,32 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+    <title>Receitas - Foodfy</title>
+    <link rel="stylesheet" href="/stylefoodfy.css">
+{% endblock head %}
+
+
+{% block content %}
+        <main>
+            <section class="chefs_admin">
+            {% for chef in chefs %}
+                <div class="chef_admin" id="{{item.id}}">
+                    <span>
+                        <div class="fotoChef">
+                            <img src="{{chef.avatar_url}}" alt="foto do chef:{{chef.name}}">
+                        </div>
+                    </span>
+                    <span>
+                        <div class="nomeChef">
+                            <h3>{{chef.name}}</h3>
+                        </div>
+                        <p>{{chef.total_recipes}} receitas</p>
+                    </span>
+                </div>
+            {% endfor %}
+</section>
+
+            
+        </main>
+{% endblock content %}
+
