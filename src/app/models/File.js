@@ -1,4 +1,5 @@
 const db = require('../../config/db')
+const fs = require('fs')
 
 module.exports = {
     create({filename, path}){
@@ -32,5 +33,26 @@ module.exports = {
         ]
 
         return db.query(query, values)
+    },
+    async takeFiles(id){
+        return db.query(`
+        SELECT * FROM recipe_files WHERE recipe_id =$1 `, [id])
+    },
+    async showFiles(fileId){
+        return db.query(`
+        SELECT * FROM files WHERE id = $1`, [fileId])
+    },
+    async delete(id){
+        const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id])
+        const file = result.rows[0]
+
+        fs.unlinkSync(file.path)
+
+        return db.query(`
+        DELETE FROM files WHERE id = $1`, [id])
+    },
+    deleteFromRecipeFiles(id){
+        return db.query(`
+        DELETE FROM recipe_files WHERE recipe_id = $1`, [id])
     }
 }

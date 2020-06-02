@@ -13,7 +13,7 @@ module.exports = {
             callback(results.rows)
         })
     },
-    create(data, callback){
+    async create(data){
         const query = `
         INSERT INTO recipes(
             chef_id,
@@ -34,11 +34,7 @@ module.exports = {
             date(Date.now()).iso
         ]
 
-        db.query(query, values, function(err, results){
-            if( err ) throw `Database Error! ${err}`
-
-            callback(results.rows[0])
-        })
+       return db.query(query, values)
     },
     find(id, callback){
         db.query(`
@@ -83,11 +79,7 @@ module.exports = {
             return callback()
         })
     },
-    chefsSelectOptions(callback){
-        db.query(`SELECT name, id FROM chefs`, function(err, results){
-            if(err) throw `Database Error! ${err}`
-
-            callback(results.rows)
-        })
+    async chefsSelectOptions(){
+        return db.query(`SELECT name, id FROM chefs`)
     }
 }

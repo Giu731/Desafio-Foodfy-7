@@ -138,7 +138,7 @@ main.search h1{
 
 h1{
     font-size: 32px;
-    margin: 116px auto 10px 60px;
+    /* margin: 116px auto 10px 60px; */
     padding-bottom: 10px;
 }
 
@@ -242,10 +242,40 @@ footer p{
 
 /* Recipe´s Page */
 
-.Page #recipe{
-    border-radius: 15px;
-    margin-top: 20px;
+.Page .gallery{
+    width: 940px;
 }
+
+.Page .highlight > img{
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: 50% 50%;
+    border-radius: 15px;
+    margin-top: 20px;    
+}
+
+.Page .gallery-preview{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; 
+}
+
+.Page .gallery-preview img{
+    height: 49.7px;
+    width: 50px;
+    object-fit: cover;
+    border: 1px solid #DDDDDD;
+    border-radius: 3.5px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.Page .gallery-preview img:hover,
+.Page .gallery-preview img .active{
+    opacity: 1;
+}
+
 .cooker-info{
     text-align: center;
     box-sizing: border-box;
