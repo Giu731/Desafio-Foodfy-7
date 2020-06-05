@@ -10,7 +10,28 @@
 {% block content %}
     <main>
         <section class="recipesPage">
-            <img src="{{item.image}}" alt = "imagem ilustrativa da receita: {{item.title}}">
+            <div class = "gallery">
+            <div class = "highlight">
+                {% if not files[0] %}
+                    <img id = "recipe" src = "http://placehold.it/500x500?text=PRODUTO SEM FOTO"/>
+                {% else %}
+                    <img id = "recipe" src = "{{files[0].src}}" alt = "{{files[0].name}}">
+                {% endif %}
+            </div>
+            
+            <div class = "gallery-preview">
+                {% for image in files %}
+                    <img 
+                        src = "{{image.src}}"
+                        alt = "{{image.name}}"
+                        {% if loop.index0 == 0 %}
+                        class = "active"
+                        {% endif %}
+                        onclick = "ImageGallery.setImage(event)"
+                    >
+                {% endfor %}
+            </div>   
+        </div>
             <div class="cooker-info">
                 <div class="title">
                     <h1>{{item.title}}</h3>
@@ -31,7 +52,7 @@
                 <div class="steps">
                     <h3>Preparo<button class="visibility">ESCONDER</button></h3>
                     <ul class="recipes-info" id="preparation-steps">
-                        {% for step in item.steps %}
+                        {% for step in item.preparation %}
                             <li>{{step}}</li>
                         {% endfor %}
                     </ul>

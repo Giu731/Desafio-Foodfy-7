@@ -22,18 +22,20 @@
                     <img id = "recipe" src = "{{files[0].src}}" alt = "{{files[0].name}}">
                 {% endif %}
             </div>
-            <div class = "gallery-preview">
-                {% for image in files %}
-                    <img 
-                        src = "{{image.src}}"
-                        alt = "{{image.name}}"
-                        {% if loop.index0 == 0 %}
-                        class = "active"
-                        {% endif %}
-                        onclick = "ImageGallery.setImage(event)"
-                    >
-                {% endfor %}
-            </div>
+            
+                <div class = "gallery-preview">
+                    {% for image in files %}
+                        <img 
+                            src = "{{image.src}}"
+                            alt = "{{image.name}}"
+                            {% if loop.index0 == 0 %}
+                            class = "active"
+                            {% endif %}
+                            onclick = "ImageGallery.setImage(event)"
+                        >
+                    {% endfor %}
+                </div>
+            
         </div>
         <div class="cooker-info">
             <div class="title">

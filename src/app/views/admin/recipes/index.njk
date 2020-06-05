@@ -10,11 +10,11 @@
 <main>
 <h3>Gerenciar Receitas</h3>
 <section class="receitas_admin">
-    {% for recipe in recipes %}
+    {% for recipe in recipeResults %}
         <div class="receita_admin" id="{{item.id}}">
             <span>
                 <div class="fotoReceita">
-                    <img src="{{recipe.image}}" alt="imagem ilustrativa da receita: {{recipe.title}}">
+                    <img src="{{recipe.image[0].src}}" alt="imagem ilustrativa da receita: {{recipe.title}}">
                 </div>
             </span>
             <span>

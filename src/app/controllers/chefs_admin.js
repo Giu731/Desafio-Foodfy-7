@@ -1,4 +1,5 @@
 const Chef_admin = require("../models/Chef_admin")
+const File = require("../models/File")
 
 module.exports = {
     index(req, res){
@@ -16,8 +17,25 @@ module.exports = {
                 return res.send("Por favor, preencha todos os campos.")
             }
         }
+        
+        if(req.files.length == 0){
+            return res.send ("Por favor, selecione ao menos um arquivo")
+        }
 
-       Chef_admin.create(req.body, function(chef){
+        // const filesPromise = req.files.map(file => File.create({...file}))
+        // const resultsFile = await (await Promise.all(filesPromise)).map(file => file.rows[0].id)
+
+
+        // const resultsRecipe = await Recipe_admin.create(req.body)
+        // const recipeId = resultsRecipe.rows[0].id
+
+        // resultsFile.map(id => File.linkToRecipeFile(id, recipeId))
+        // console.error
+       Chef_admin.create(req.body, async function(chef){
+        const filesPromise = req.files.map(file => File.create({...file}))
+        await Promise.all(filesPromise)
+
+        console.error
             return res.redirect(`/admin/chefs/${chef.id}`)
        })
     },

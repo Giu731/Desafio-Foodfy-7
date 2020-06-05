@@ -12,6 +12,8 @@ body{
 
 }
 
+/* HEADER */
+
 header.admin nav a .logo{
     width: 90.6px;
     height: 26.9px;
@@ -106,6 +108,8 @@ header form button{
     margin-top: 10px;
 }
 
+/* MAIN */
+
 main{
     margin-left: 230px;
     margin-right: 230px;
@@ -138,8 +142,11 @@ main.search h1{
 
 h1{
     font-size: 32px;
-    /* margin: 116px auto 10px 60px; */
     padding-bottom: 10px;
+}
+
+.intro-block h1{
+    margin: 116px auto 10px 60px;
 }
 
 .intro-block p{
@@ -153,6 +160,7 @@ h1{
     grid-template-columns: 1fr;
     width: 316px;
     height: 84px;
+    align-self: end;
 }
 
 h2{
@@ -241,12 +249,13 @@ footer p{
 }
 
 /* Recipe´s Page */
-
-.Page .gallery{
-    width: 940px;
+.Page .gallery,
+.recipesPage .galley{
+    width: 889px;
 }
 
-.Page .highlight > img{
+.Page .highlight > img,
+.recipesPage .highlight > img{
     width: 100%;
     height: 280px;
     object-fit: cover;
@@ -255,13 +264,23 @@ footer p{
     margin-top: 20px;    
 }
 
-.Page .gallery-preview{
+.Page .previewDiv,
+.recipesPage .previewDiv{
     display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.Page .gallery-preview,
+.recipesPage .gallery-preview{
+    margin-right: 0px;
+    display: grid;
+    width: 290px;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px; 
 }
 
-.Page .gallery-preview img{
+.Page .gallery-preview img,
+.recipesPage .gallery-preview img{
     height: 49.7px;
     width: 50px;
     object-fit: cover;
@@ -272,7 +291,9 @@ footer p{
 }
 
 .Page .gallery-preview img:hover,
-.Page .gallery-preview img .active{
+.Page .gallery-preview img.active,
+.recipesPage .gallery-preview img:hover,
+.recipesPage .gallery-preview img.active{
     opacity: 1;
 }
 
@@ -378,6 +399,10 @@ footer p{
 .Head span:first-child{
     font-size: 24px;
     font-weight: bold;
+}
+
+.Head span:last-child{
+    justify-self: end;
 }
 
 .Head a,
@@ -540,6 +565,40 @@ form .item #photos-preview img{
 #photos-preview .photo:hover i{
     opacity: 1;
 }
+
+/* AVATAR CHEFS */
+form .item #photos-upload-avatar{
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+
+form .item #photos-upload-avatar p{
+    background-color: #6558C3;
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 9px 18px;
+    margin-top: 10px;
+    width: 139px;
+    cursor: pointer;
+}
+
+/* form .item #photos-preview-avatar{
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+}
+
+form .item #photos-preview-avatar img{
+    width:100%;
+    height: 150px;
+
+} */
+
+
 
 /* Listagem Chefs */
 

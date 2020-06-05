@@ -89,8 +89,7 @@ const PhotosUpload = {
         const photoDiv = event.target.parentNode
 
         if(photoDiv.id){
-            const removedFiles = document.querySelector(`
-            input[name="removed_files"]`)
+            const removedFiles = document.querySelector('input[name="removed_files"]')
             if(removedFiles){
                 removedFiles.value += `${photoDiv.id},`
             }
@@ -109,6 +108,38 @@ const ImageGallery = {
         target.classList.add('active')
 
         ImageGallery.highlight.src = target.src
+    }
+}
+
+const AvatarUpload = {
+    uploadLimit: 1,
+    handleFileInput(event){
+        const { files } = event.target
+        const {uploadLimit} = AvatarUpload
+
+        if(files.length > uploadLimit){
+            alert(`Você ultrapassou o limite (${uploadLimit}) de arquivos`)
+            event.preventDefault()
+            return
+        }
+
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            const image = new Image()
+            image.src = String(reader.result)
+
+            const div = document.createElement('div')
+            div.classList.add('avatar')
+
+            div.onclick = alert('remover arquivo')
+
+            div.appendChild(image)
+
+            document.querySelector('#photos-preview-avatar').appendChild(div)
+        }
+        
+        reader.readAsDataURL(files)
     }
 }
 

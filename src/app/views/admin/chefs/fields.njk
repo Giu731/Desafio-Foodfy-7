@@ -8,15 +8,21 @@
         >
     </div>
 </div>
-<div class = "item" id = "chef_Image">
+<div class = "item" >
     <div>Avatar</div>
     <div>    
-        <input
-            type = "url"
-            name = "avatar_url"
-            value = "{{chef.avatar_url}}"
-            placeholder = "http://"
-        >
+        <div id = "photos-upload-avatar">
+            <input
+                id = "photos-input"
+                type = "file"
+                name = "avatar"
+                multiple
+                accept = "image/*"
+                onchange = "AvatarUpload.handleFileInput(event)"
+            >
+            <div id = "photos-preview-avatar"></div>
+            <p>Enviar Avatar</p>
+        <div>
     </div>
 </div>
 
