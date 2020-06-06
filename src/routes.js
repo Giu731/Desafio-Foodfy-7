@@ -26,8 +26,8 @@ routes.post("/admin/recipes", multer.array("photos", 5), recipes.post)
 routes.put("/admin/recipes", multer.array("photos", 5), recipes.put)
 routes.delete("/admin/recipes", recipes.delete)
 
-routes.post("/admin/chefs", chefs.post)
-routes.put("/admin/chefs", chefs.put)
+routes.post("/admin/chefs", multer.array("avatar", 1), chefs.post)
+routes.put("/admin/chefs", multer.array("avatar", 1), chefs.put)
 routes.delete("/admin/chefs", chefs.delete)
 
 

@@ -112,34 +112,91 @@ const ImageGallery = {
 }
 
 const AvatarUpload = {
+    input: "",
+    preview: document.querySelector('#photos-preview-avatar'),
     uploadLimit: 1,
+    files: [],
     handleFileInput(event){
-        const { files } = event.target
-        const {uploadLimit} = AvatarUpload
+        const { files: fileList } = event.target
+        AvatarUpload.input = event.target
+        if(AvatarUpload.hasLimit(event)) return
+        
+        console.log("funciona")
 
-        if(files.length > uploadLimit){
+        Array.from(fileList).forEach(file => {
+
+            AvatarUpload.files.push(file)
+
+            const reader = new FileReader()
+            console.log(file)
+            reader.onload = () => {
+                const image = new Image()
+                image.src = String(reader.result)
+
+                const div = AvatarUpload.getContainer(image)
+                
+                AvatarUpload.preview.appendChild(div)
+            }
+            reader.readAsDataURL(file)
+        })
+
+        AvatarUpload.input.files = AvatarUpload.getAllFiles()
+        
+    },
+    hasLimit(event){
+        const {uploadLimit, input, preview } = AvatarUpload
+        const { files: fileList } =input
+
+        if(fileList.length > uploadLimit){
             alert(`Você ultrapassou o limite (${uploadLimit}) de arquivos`)
             event.preventDefault()
-            return
+            return true
         }
 
-        const reader = new FileReader()
+        const avatarDiv = []
+        preview.childNodes.forEach(item => {
+            if(item.classList && item.classList.value == "avatar")
+            avatarDiv.push(item)
+        })
 
-        reader.onload = () => {
-            const image = new Image()
-            image.src = String(reader.result)
-
-            const div = document.createElement('div')
-            div.classList.add('avatar')
-
-            div.onclick = alert('remover arquivo')
-
-            div.appendChild(image)
-
-            document.querySelector('#photos-preview-avatar').appendChild(div)
+        const totalPhotos = fileList.length + avatarDiv.length
+        if(totalPhotos > uploadLimit){
+            alert("Você ultrapassou o limite de fotos")
+            event.preventDefault()
+            return true
         }
-        
-        reader.readAsDataURL(files)
+        return false
+    },
+    getAllFiles(){
+        const dataTranfer = new ClipboardEvent("").clipboardData ||
+        new DataTransfer()
+
+        AvatarUpload.files.forEach(file => dataTranfer.items.add(file))
+
+        return dataTranfer.files
+    },
+    getContainer(image){
+        const div = document.createElement('div')
+        div.classList.add('avatar')
+
+        div.onclick = AvatarUpload.removeAvatar
+        const input = document.createElement('input')
+        input.type = "url"
+        input.name = "avatar"
+        div.appendChild(input)
+        input.value = `${image.src}`
+
+        return div
+    },
+    removeAvatar(event){
+        const avatarDiv = event.target.parentNode
+        const avatarArray = Array.from(AvatarUpload.preview.children)
+        const index = avatarArray.indexOf(avatarDiv)
+
+        AvatarUpload.files.splice(index, 1)
+        AvatarUpload.input.files = AvatarUpload.getAllFiles()
+
+        avatarDiv.remove()
     }
 }
 
