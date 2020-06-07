@@ -1,4 +1,3 @@
-const receitas = document.querySelectorAll('.receita')
 // const recipes = require('../')
 const receitasInfo = document.querySelectorAll('.recipes-info')
 const visibility = document.querySelectorAll('.visibility')
@@ -24,11 +23,31 @@ for(let i=0; i<visibility.length; i++){
     })
 }
 
-for(receita of receitas){
-    receita.id.addEventListener("click", function(){
-        window.location.href = `/receitas/${receita.id}`
-    })
+const Redirect = {
+    input: [],
+    receitas: document.querySelectorAll('.receita'),
+    goToPage(event){
+        console.log(event)
+        const recipe = event.target
+        console.log(recipe)
+        Redirect.input.push(recipe)
+        console.log(Redirect.input)
+        const recipeId = recipe.getAttribute("id")
+        console.log(recipeId)
+        window.location.href = `/receitas/${recipeId}`
+
+    }
+
 }
+// for(receita of receitas){
+//     console.log(receita)
+//     receita.addEventListener("click", function(){
+//         console.log(receita)
+//         const recipeId = receita.getAttribute("id")
+//         console.log(recipeId)
+//         window.location.href = `/receitas/${recipeId}`
+//     })
+// }
 
 const ImageGallery = {
     highlight: document.querySelector('.gallery .highlight > img'),
