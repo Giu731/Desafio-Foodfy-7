@@ -89,7 +89,11 @@
     {% endif %}
     
     </div>
-    <button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
+    <button 
+        type="button" 
+        class="add-ingredient"
+        onclick = "Adding.addIngredient()"
+        >Adicionar novo ingrediente</button>
 </div>
 <div class = "item" >
     <div>Modo de preparo</div>
@@ -114,7 +118,10 @@
         </div>
     {% endif %}
     </div>
-    <button type="button" class="add-step">Adicionar novo passo</button>
+    <button 
+        type="button" 
+        class="add-step"
+        onclick = "Adding.addSteps()">Adicionar novo passo</button>
 </div>
 <div class = "item" id = "information">
     <div>Infomações adicionais</div>
