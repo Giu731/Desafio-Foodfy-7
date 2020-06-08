@@ -119,17 +119,6 @@ module.exports = {
         
         console.log(req.files.length)
 
-        if(req.files.length == 0){
-            return res.send ("Por favor, selecione ao menos um arquivo")
-        }
-
-        if(req.files.length !=0){
-            const newFilesPromise = req.files.map(file => File.create({...file}))
-            const resultsFile = await (await Promise.all(newFilesPromise)).map(file => file.rows[0].id)
-            resultsFile.map(id => File.linkToRecipeFile(id, req.body.id))
-
-        }
-
         if(req.body.removed_files){
             const removedFiles = req.body.removed_files.split(",")
             const lastIndex = removedFiles.length - 1
@@ -141,23 +130,34 @@ module.exports = {
             await Promise.all(removedFilesPromise)
         }
 
+
+        if(req.files.length !=0){
+            const newFilesPromise = req.files.map(file => File.create({...file}))
+            const resultsFile = await (await Promise.all(newFilesPromise)).map(file => file.rows[0].id)
+            resultsFile.map(id => File.linkToRecipeFile(id, req.body.id))
+
+        }
+
+
         Recipe_admin.update(req.body, function(){
             return res.redirect(`/admin/recipes/${req.body.id}`)
         })
+        return res.redirect(`/admin/recipes/${req.body.id}`)
+
     },
     async delete(req, res){
-        if( req.files && req.files.length != 0){
-            File.deleteFromRecipeFiles(req.body.id)
+        if( req.body.id){
 
-            const removedFiles = req.body.removed_files.split(",")
-            const lastIndex = removedFiles.length - 1
-            removedFiles.splice(lastIndex, 1)
-
-            const removedFilesPromise = removedFiles.map(id => File.delete(id))
-            await Promise.all(removedFilesPromise)
+            const resultsFile = (await File.takeFiles(req.body.id)).rows
+            for(file of resultsFile){
+                const fileId = file.file_id
+                File.deleteFromRecipeFiles(fileId)
+    
+                File.deleteFromFiles(fileId)
+            }    
         }
 
-        Recipe_admin.delete(req.body.id, function(){
+        await Recipe_admin.delete(req.body.id, function(){
             return res.redirect("/admin/recipes")
         })
     }

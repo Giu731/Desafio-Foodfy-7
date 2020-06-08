@@ -72,7 +72,7 @@ module.exports = {
             callback()
         })
     },
-    delete(id, callback){
+    async delete(id, callback){
         db.query(`DELETE FROM recipes WHERE id = $1`, [id], function(err, results){
             if (err) throw `Database Error! ${err}`
 
