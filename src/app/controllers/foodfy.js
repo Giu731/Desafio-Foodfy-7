@@ -111,8 +111,28 @@ module.exports = {
     },
     search(req, res){
         const { filter } = req.query
-        Website.findBy(filter, function(recipes){
-              return res.render("search", {filter, items: recipes})
+        Website.findBy(filter, async function(recipes){
+            let recipeResults = []
+                for(recipe of recipes){
+                    const resultsFile = await File.takeFiles(recipe.id)
+                    const fileId = resultsFile.rows[0].file_id
+
+                    const resultsShowFile = await File.showFiles(fileId)
+
+                    let files = resultsShowFile.rows
+                    files = files.map(file => ({
+                        ...file,
+                        src: `${req.protocol}://${req.headers.host}${file.path.replace("public","")}`
+                    }))
+
+                    const recipeFinal = {
+                        ...recipe,
+                        image: files
+                    }
+            
+                    recipeResults.push(recipeFinal)
+                }
+            return res.render("search", {filter, items: recipeResults})
         })
     },
     showChefs(req, res){

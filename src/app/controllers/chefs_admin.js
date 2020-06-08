@@ -37,8 +37,28 @@ module.exports = {
         Chef_admin.find(req.params.id, function(chef){
             if(!chef) return res.send("Chef not found")
 
-            Chef_admin.showRecipes(req.params.id, function(recipes){
-                return res.render("admin/chefs/show", {chef, recipes})
+            Chef_admin.showRecipes(req.params.id, async function(recipes){
+                let recipeResults = []
+                for(recipe of recipes){
+                    const resultsFile = await File.takeFiles(recipe.id)
+                    const fileId = resultsFile.rows[0].file_id
+
+                    const resultsShowFile = await File.showFiles(fileId)
+
+                    let files = resultsShowFile.rows
+                    files = files.map(file => ({
+                        ...file,
+                        src: `${req.protocol}://${req.headers.host}${file.path.replace("public","")}`
+                    }))
+
+                    const recipeFinal = {
+                        ...recipe,
+                        image: files
+                    }
+            
+                    recipeResults.push(recipeFinal)
+                }
+                return res.render("admin/chefs/show", {chef, recipes: recipeResults})
 
             })
             

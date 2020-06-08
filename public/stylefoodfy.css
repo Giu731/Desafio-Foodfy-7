@@ -273,16 +273,17 @@ footer p{
 .Page .gallery-preview,
 .recipesPage .gallery-preview{
     margin-right: 0px;
-    display: grid;
-    width: 290px;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    
 }
 
 .Page .gallery-preview img,
 .recipesPage .gallery-preview img{
     height: 49.7px;
     width: 50px;
+    margin-left: 8px;
     object-fit: cover;
     border: 1px solid #DDDDDD;
     border-radius: 3.5px;
