@@ -7,6 +7,7 @@ module.exports = {
         SELECT recipes.*, chefs.name AS chef_name
         FROM recipes
         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        ORDER BY recipes.created_at DESC
         `, function(err, results){
             if( err ) throw `Database Error! ${err}`
 
@@ -21,8 +22,9 @@ module.exports = {
             ingredients,
             preparation,
             information,
-            created_at
-        ) VALUES ($1, $2, $3, $4, $5, $6)
+            created_at,
+            updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING id
         `
         const values = [
@@ -31,6 +33,7 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
+            date(Date.now()).iso,
             date(Date.now()).iso
         ]
 
@@ -54,8 +57,9 @@ module.exports = {
         title = ($2),
         ingredients = ($3),
         preparation = ($4),
-        information = ($5)
-        WHERE id = $6
+        information = ($5),
+        updated_at = ($6)
+        WHERE id = $7
         `
         const values = [
             data.chef,
@@ -63,6 +67,7 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
+            date(Date.now()).iso,
             data.id
         ]
 

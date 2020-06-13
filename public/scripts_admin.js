@@ -194,6 +194,7 @@ const AvatarUpload = {
         input.name = "avatar"
         div.appendChild(input)
         input.value = `${image.src}`
+        console.log(image)
 
         return div
     },
@@ -205,6 +206,18 @@ const AvatarUpload = {
         AvatarUpload.files.splice(index, 1)
         AvatarUpload.input.files = AvatarUpload.getAllFiles()
 
+        avatarDiv.remove()
+    },
+    removeOldAvatar(event){
+        const avatarDiv = event.target.parentNode
+        console.log(avatarDiv)
+
+        if(avatarDiv.id){
+            const removedFiles = document.querySelector(`input[name = "removed_files"]`)
+            if(removedFiles){
+                removedFiles.value += `${avatarDiv.id},` 
+            }
+        }
         avatarDiv.remove()
     }
 }

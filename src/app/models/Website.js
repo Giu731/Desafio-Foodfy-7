@@ -6,6 +6,7 @@ module.exports = {
         SELECT recipes.*, chefs.name AS chef_name
         FROM recipes
         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        ORDER BY recipes.created_at DESC
         `, function(err, results){
             if( err ) throw `Database Error! ${err}`
 
@@ -29,6 +30,7 @@ module.exports = {
         FROM recipes
         LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
         WHERE recipes.title ILIKE '%${filter}%'
+        ORDER BY recipes.updated_at DESC
         `, function(err, results){
             if ( err ) throw `Database Error! ${err}`
 
@@ -52,7 +54,8 @@ module.exports = {
         SELECT recipes.*
         FROM recipes
         LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-        WHERE chefs.id = $1`, [id], function(err, results){
+        WHERE chefs.id = $1
+        ORDER BY recipes.created_at DESC`, [id], function(err, results){
             if ( err ) throw `Database Error! ${err}`
 
             callback(results.rows)

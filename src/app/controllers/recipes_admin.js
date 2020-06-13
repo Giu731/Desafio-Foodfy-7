@@ -142,7 +142,7 @@ module.exports = {
         Recipe_admin.update(req.body, function(){
             return res.redirect(`/admin/recipes/${req.body.id}`)
         })
-        return res.redirect(`/admin/recipes/${req.body.id}`)
+        // return res.redirect(`/admin/recipes/${req.body.id}`)
 
     },
     async delete(req, res){
