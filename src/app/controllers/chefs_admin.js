@@ -106,54 +106,40 @@ module.exports = {
         })
     },
     async put(req, res){
-        console.log("pelo menos eu começo")
+        let chefResults = req.body
+        // console.log(chefResults)
+
         const keys = Object.keys(req.body)
         for(key of keys){
             if(req.body[key]=="" && key != "removed_files"){
                 return res.send("Por favor, preencha todos os campos.")
             }
-        }
-        console.log("vou até aqui")
-        console.log(req.body.removed_files)
-        if(req.body.removed_files){
-            console.log("passo por aqui")
-            const removedFiles = req.body.removed_files.split(",")
-            console.log(removedFiles)
+        }       
 
-            const lastIndex = removedFiles.length - 1
-            console.log(lastIndex)
-
-            removedFiles.splice(lastIndex, 1)
-            console.log(removedFiles)
-
-            const removedFilesPromise = removedFiles.map(id => File.deleteFromFiles(id))
-            console.log(removedFilesPromise)
-
-            await Promise.all(removedFilesPromise)
-            console.log(removedFilesPromise)
-        }
-        console.log("chego até aqui")
-        
-        console.log("funciona entrar no try")
-        if(req.files && req.files.lenght != 0 ){
-            console.log("sei que é um arquivo novo")
+        console.log(req.files)
+        if(req.files.lenght != 0 ){
             const newFilesPromise = req.files.map(file => File.create({...file}))
             const resultsFile = await (await Promise.all(newFilesPromise)).map(file => file.rows[0].id)
             newFileId = resultsFile[0]
             console.log(newFileId)
-            req.body = {
-                file_id: newFileId
-            }
-        } 
+            req.body.file_id = newFileId
+
+            chefResults = await Chef_admin.update(req.body)
+        }
+
+        if(req.body.removed_files){
+            const removedFiles = req.body.removed_files.split(",")
+            const lastIndex = removedFiles.length - 1
+
+            removedFiles.splice(lastIndex, 1)
+            const removedFilesPromise = removedFiles.map(id => File.deleteFromFiles(id))
+
+            await Promise.all(removedFilesPromise)
+        }
             
-        const chefResults = await Chef_admin.update(req.body)
         console.log(chefResults)
-        // const chefUpdate = chefResults.rows[] 
         return res.redirect(`/admin/chefs/${chefResults.id}`)
         
-
-        
-
     },
     delete(req, res){
         Chef_admin.delete(req.body.id, function(){

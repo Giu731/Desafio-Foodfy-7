@@ -147,10 +147,11 @@ const AvatarUpload = {
                 AvatarUpload.preview.appendChild(div)
             }
             reader.readAsDataURL(file)
+            console.log("criei a div")
         })
 
         AvatarUpload.input.files = AvatarUpload.getAllFiles()
-        
+        console.log("adicionei aos arquivos")
     },
     hasLimit(event){
         const {uploadLimit, input, preview } = AvatarUpload
@@ -194,7 +195,8 @@ const AvatarUpload = {
         input.name = "avatar"
         div.appendChild(input)
         input.value = `${image.src}`
-        console.log(image)
+        // div.appendChild(image)
+        console.log(`essa é a ${image.url}`)
 
         return div
     },
@@ -247,27 +249,5 @@ const Adding = {
     }
 
 }
-// function addIngredient(){
-//     const ingredients = document.querySelector("#ingredients")
-//     const fieldContainer = document.querySelectorAll(".ingredient")
 
-//     const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true)
-//     if (newField.children[0].value == "") return false
-
-//     newField.children[0].value = ""
-//     ingredients.appendChild(newField)
-// }
-
-// function addSteps(){
-//     const steps = document.querySelector("#steps")
-//     const fieldContainer = document.querySelectorAll(".step")
-
-//     const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true)
-//     if (newField.children[0].value == "") return false
-
-//     newField.children[0].value = ""
-//     steps.appendChild(newField)
-// }
-// document.querySelector(".add-ingredient").addEventListener("click", addIngredient)
-// document.querySelector(".add-step").addEventListener("click", addSteps)
 
